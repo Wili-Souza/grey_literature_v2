@@ -1,0 +1,8 @@
+/Migrar_base
+.env
+test.txt
+.vscode
+__pycache__
+*.xlsx
+*.csv
+testejson.py
