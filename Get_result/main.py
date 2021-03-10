@@ -285,11 +285,10 @@ def search_filter():
                 data['autor'].append(all_collections[j]['autor'])
                 break
 
-    print(len(data['tipo']), len(data['titulo']), len(data['link']), len(data['data']), \
-            len(data['descricao']))
+    print("{} resultados encontrados." .format(len(data['link'])))
 
 # --- EXECUTANDO 
-search_string = input("String: ")
+search_string = input("String: ") # ex.: ("Termo 1" OR "Termo 2)" AND "Termo 3"
 result = tratamento_string(mark_operators(search_string))
 result = clean_result(result)
 

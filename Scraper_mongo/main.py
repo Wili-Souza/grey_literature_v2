@@ -128,6 +128,13 @@ def search_on_AC():
 
     return scraped_data_AC
 
+# verifica se os novos posts possuem tipos novos (se sim, adiciona a lista de tipos)
+def search_new_types(new_data):
+    types_saved = [x['value'] for x in db.types.find()]
+    for post in new_data:
+        if post['tipo'].strip() not in types_saved:
+            db.types.insert_one({'value': post['tipo'].strip()})
+
 # --- Chamando funções de busca
 scraped_data_AC = search_on_AC()
 scraped_data_scrum = search_on_scrum()
@@ -148,14 +155,18 @@ new_data_S = [{"tipo":a, "titulo":b, "link":c, "data":d, "descricao": e, "autor"
 
 
 # --- Enviando atualizações para collections do banco de dados
+
 if len(new_data_AA) > 0:
-    print("AA -> " + len(new_data_AA))
+    print("AA -> {}" .format(len(new_data_AA)))
     db.postsAA.insert_many(new_data_AA)
+    search_new_types(new_data_AA)
 
 if len(new_data_AC) > 0:
-    print("AC -> " + len(new_data_AC))
+    print("AC ->  {}" .format(len(new_data_AC)))
     db.postsAC.insert_many(new_data_AC)
+    search_new_types(new_data_AC)
 
 if len(new_data_S) > 0:
-    print("S -> " + len(new_data_S))
+    print("S ->  {}" .format(len(new_data_S)))
     db.postsS.insert_many(new_data_S)
+    search_new_types(new_data_S)
